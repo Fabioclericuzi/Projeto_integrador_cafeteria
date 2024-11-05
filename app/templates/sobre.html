@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('{% static "images/coffeebreak.png" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        p, .social-links {
+            font-size: 1.2em;
+            line-height: 1.5;
+        }
+
+        .social-links a {
+            color: #add8e6;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .social-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Sobre</h1>
+        <p>
+            Nossa história começa com uma paixão por café e pela criação de um espaço aconchegante onde pessoas
+            possam se encontrar e compartilhar momentos especiais. Nosso estabelecimento é conhecido pela
+            utilização de produtos de alta qualidade e métodos inovadores de preparo.
+        </p>
+        <p>
+            Trabalhamos com fornecedores locais e priorizamos a sustentabilidade em todas as etapas do nosso
+            processo. Nossos produtos variam de cafés artesanais a doces e salgados cuidadosamente preparados.
+            Além disso, estamos sempre inovando no cardápio e buscando as melhores práticas para aprimorar a
+            experiência de nossos clientes.
+        </p>
+        <p>
+            Conheça mais sobre os proprietários e nossa equipe através dos links abaixo:
+        </p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/fabioclericuzi" target="_blank">LinkedIn</a> |
+            <a href="https://github.com/fabioclericuzi" target="_blank">GitHub</a>
+        </div>
+
+    </div>
+</body>
+</html>

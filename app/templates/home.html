@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffeebreak</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('{% static "images/coffeebreak.png" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <h1>Coffeebreak Cafeteria</h1>
+    <a class="button" href="{% url 'cardapio' %}">Cardápio</a>
+    <a class="button" href="{% url 'contato' %}">Contato</a>
+    <a class="button" href="{% url 'cadastro' %}">Cadastro</a>
+    <a class="button" href="{% url 'sobre' %}">Sobre</a>
+</body>
+</html>
