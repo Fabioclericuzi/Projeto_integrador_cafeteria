@@ -1,0 +1,129 @@
+body {
+    background-image: url('../images/coffeebreak.png');
+    background-size: cover;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+.user-validation {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.user-validation input {
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.user-validation button {
+    background-color: green;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-validation .back-button {
+    background-color: gray;
+    margin-left: 10px;
+}
+
+.user-validation .back-button:hover {
+    background-color: #5a5a5a;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-button {
+    cursor: pointer;
+    color: lime;
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.add-button:hover {
+    color: lightgreen;
+}
+
+.cart {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.cart-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.cart-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.total {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.back-button {
+    background-color: gray;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    background-color: #5a5a5a;
+}

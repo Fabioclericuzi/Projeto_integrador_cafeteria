@@ -1,5 +1,6 @@
 from django import forms
 from django.core.mail.message import EmailMessage
+from .models import Usuario
 
 class ContatoForm(forms.Form):
     nome = forms.CharField(label='Nome', max_length=100)
@@ -23,3 +24,22 @@ class ContatoForm(forms.Form):
             headers={'Reply-To': email}
         )
         mail.send()
+
+class UsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['nome', 'endereco', 'cpf']
+        labels = {
+            'nome': 'Nome',
+            'endereco': 'Endereço',
+            'cpf': 'CPF'
+        }
+
+    def save_user(self):
+        usuario = Usuario(
+            nome=self.cleaned_data['nome'],
+            endereco=self.cleaned_data['endereco'],
+            cpf=self.cleaned_data['cpf']
+        )
+        usuario.save()
+        return usuario

@@ -4,31 +4,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardapio</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('{% static "images/coffeebreak.png" %}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-
-        h1 {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 8px;
-        }
-    </style>
+    <title>Cardápio</title>
+    <link rel="stylesheet" href="{% static 'css/card_style.css' %}">
 </head>
 <body>
-    <h1>Cardapio</h1>
+    <div class="container">
+        <div id="validation-message" class="alert alert-success d-none" role="alert"></div>
+
+        <div id="purchase-message" class="alert alert-success d-none" role="alert"></div>
+
+        <h1>Cardápio</h1>
+
+        <div class="user-validation">
+            <label for="cpf">Informe seu CPF:</label>
+            <input type="text" id="cpf" placeholder="Digite seu CPF">
+            <button onclick="validateUser()">Validar</button>
+            <button class="back-button" onclick="window.location.href='/'">Voltar</button>
+        </div>
+
+        <div id="menu-section" style="display: none;">
+            <div class="section">
+                <h2>Bebidas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for produto in produtos %}
+                            {% if 'Café' in produto.produto_nome or 'Chá' in produto.produto_nome or 'Smoothie' in produto.produto_nome or 'Milkshake' in produto.produto_nome or 'Limonada' in produto.produto_nome or 'Irish Coffee' in produto.produto_nome %}
+                            <tr>
+                                <td>{{ produto.produto_nome }}</td>
+                                <td>{{ produto.preco_unitario|floatformat:2 }}</td>
+                                <td><span class="add-button" onclick="addToCart('{{ produto.produto_nome }}', {{ produto.preco_unitario }})">➕</span></td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Comidas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for produto in produtos %}
+                            {% if 'Croissant' in produto.produto_nome or 'Pão' in produto.produto_nome or 'Sanduíche' in produto.produto_nome or 'Panini' in produto.produto_nome or 'Cheesecake' in produto.produto_nome or 'Pavê' in produto.produto_nome or 'Mousse' in produto.produto_nome or 'Brownie' in produto.produto_nome or 'Torta' in produto.produto_nome or 'Panqueca' in produto.produto_nome or 'Coxinha' in produto.produto_nome or 'Brioche' in produto.produto_nome %}
+                            <tr>
+                                <td>{{ produto.produto_nome }}</td>
+                                <td>{{ produto.preco_unitario|floatformat:2 }}</td>
+                                <td><span class="add-button" onclick="addToCart('{{ produto.produto_nome }}', {{ produto.preco_unitario }})">➕</span></td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart" id="cart">
+        <h2>Carrinho</h2>
+        <div id="cart-items"></div>
+        <div class="total" id="cart-total">Total: R$ 0.00</div>
+        <button class="cart-button" onclick="finalizePurchase()">Finalizar Compra</button>
+        <button class="cart-button" onclick="clearCart()">Limpar Carrinho</button>
+    </div>
+    <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

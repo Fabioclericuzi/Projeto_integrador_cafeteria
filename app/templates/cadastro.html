@@ -1,34 +1,28 @@
+{% load bootstrap4 %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('{% static "images/coffeebreak.png" %}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-
-        h1 {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 8px;
-        }
-    </style>
+    <title>Cadastro de Usuário</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>Cadastro</h1>
+    <div class="container">
+        <h1>Cadastro de Usuário</h1>
+        {% bootstrap_messages %}
+
+        <form action="{% url 'cadastro' %}" method="post" class="form" autocomplete="off">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary ml-2">Voltar</a>
+            {% endbuttons %}
+        </form>
+    </div>
+
+    {% bootstrap_javascript jquery='full' %}
 </body>
 </html>
