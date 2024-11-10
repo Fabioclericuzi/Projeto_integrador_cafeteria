@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: cafeteria
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Userpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  web:
+    build: .
+    container_name: django_app
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    depends_on:
+      - db
+    command: >
+      sh -c "
+      while ! mysqladmin ping -h mysql_db --silent; do
+        echo 'Aguardando o MySQL...'; sleep 5; done;
+      python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+      "
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge

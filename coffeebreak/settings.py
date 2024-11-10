@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'cafeteria',
         'USER': 'user',
         'PASSWORD': 'Userpassword',
-        'HOST': 'localhost',
+        'HOST': 'mysql_db',
         'PORT': '3306',
     }
 }
@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'America/sao_paulo'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
