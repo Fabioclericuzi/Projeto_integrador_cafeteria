@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
-from .models import Contato
+from .models import Contato, Estoque, Pedido, ItemPedido, Usuario
 from .forms import ContatoForm, UsuarioForm
-from .models import Estoque
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Pedido, ItemPedido, Usuario
 import json
 
 def validate_user(request):
@@ -14,19 +12,15 @@ def validate_user(request):
     user_exists = Usuario.objects.filter(cpf=cpf).exists()
     return JsonResponse({'valid': user_exists})
 
-
 def home(request):
     return render(request, 'home.html')
-
 
 def sobre(request):
     return render(request, 'sobre.html')
 
-
 def cardapio(request):
     produtos = Estoque.objects.all()
     return render(request, 'cardapio.html', {'produtos': produtos})
-
 
 def contato(request):
     form = ContatoForm(request.POST or None)
@@ -49,7 +43,6 @@ def contato(request):
     }
     return render(request, 'contato.html', context)
 
-
 def cadastro(request):
     form = UsuarioForm(request.POST or None)
 
@@ -66,14 +59,17 @@ def cadastro(request):
     }
     return render(request, 'cadastro.html', context)
 
-
 @csrf_exempt
 def finalize_order(request):
     if request.method == 'POST':
         data = json.loads(request.body)
+
         cpf = data.get('cpf')
         items = data.get('items')
         total = data.get('total')
+
+        if not items:
+            return JsonResponse({'success': False, 'message': 'Itens não foram fornecidos.'})
 
         try:
             usuario = Usuario.objects.get(cpf=cpf)
@@ -85,12 +81,36 @@ def finalize_order(request):
         for item in items:
             nome_produto = item.get('name')
             preco = item.get('price')
+            quantidade_solicitada = item.get('quantity')
 
-            ItemPedido.objects.create(pedido=pedido, nome_produto=nome_produto, preco=preco)
+            try:
+                produto = Estoque.objects.get(produto_nome=nome_produto)
+                quantidade_disponivel = int(produto.quantidade_disponivel or 0)
+                quantidade_solicitada = int(quantidade_solicitada or 0)
+
+                if quantidade_disponivel >= quantidade_solicitada:
+                    produto.quantidade_disponivel -= quantidade_solicitada
+                    produto.save()
+
+                    ItemPedido.objects.create(
+                        pedido=pedido,
+                        nome_produto=nome_produto,
+                        preco=preco,
+                        quantidade=quantidade_solicitada
+                    )
+                else:
+                    return JsonResponse({
+                        'success': False,
+                        'message': f'Estoque insuficiente para o produto {nome_produto}.'
+                    })
+            except Estoque.DoesNotExist:
+                return JsonResponse({
+                    'success': False,
+                    'message': f'Produto {nome_produto} não encontrado no estoque.'
+                })
 
         return JsonResponse({
             'success': True,
             'total': total,
-            'items': [{'nome_produto': item.get('name')} for item in items]
+            'items': [{'nome_produto': item.get('name'), 'quantidade': item.get('quantity')} for item in items]
         })
-

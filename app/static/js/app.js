@@ -36,7 +36,7 @@ function addToCart(name, price) {
         alert('Você precisa validar seu CPF antes de fazer um pedido.')
         return
     }
-    cart.push({ name, price })
+    cart.push({ name, price, quantity: 1 })
     updateCart()
 }
 
@@ -51,17 +51,28 @@ function clearCart() {
 }
 
 async function finalizePurchase() {
+    console.log("Carrinho:", cart);
     if (cart.length === 0) {
-        alert('Seu carrinho está vazio.');
-        return;
+        alert('Seu carrinho está vazio.')
+        return
     }
 
     if (!isUserValidated) {
-        alert('Você precisa validar seu CPF antes de fazer um pedido.');
-        return;
+        alert('Você precisa validar seu CPF antes de fazer um pedido.')
+        return
     }
 
-    const cpf = document.getElementById('cpf').value.trim();
+    const cpf = document.getElementById('cpf').value.trim()
+
+    for (const item of cart) {
+        if (!item.name || item.price == null || item.quantity == null || item.quantity <= 0) {
+            alert(`O item ${item.name || 'desconhecido'} tem uma quantidade inválida.`)
+            return
+        }
+    }
+
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+
     const response = await fetch('/finalize-order/', {
         method: 'POST',
         headers: {
@@ -69,24 +80,27 @@ async function finalizePurchase() {
         },
         body: JSON.stringify({
             cpf: cpf,
-            items: cart,
-            total: cart.reduce((sum, item) => sum + item.price, 0),
+            items: cart.map(item => ({
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity  // A quantidade de cada item
+            })),
+            total: total
         })
-    });
+    })
 
-    const result = await response.json();
+    const result = await response.json()
 
     if (result.success) {
-        const purchaseMessage = document.getElementById('purchase-message');
-        purchaseMessage.textContent = `Pedido realizado com sucesso! Total: R$ ${result.total.toFixed(2)}. Itens: ${result.items.map(item => item.nome_produto).join(', ')}`;
-        purchaseMessage.classList.remove('d-none');
+        const purchaseMessage = document.getElementById('purchase-message')
+        purchaseMessage.textContent = `Pedido realizado com sucesso! Total: R$ ${result.total.toFixed(2)}. Itens: ${result.items.map(item => item.nome_produto).join(', ')}`
+        purchaseMessage.classList.remove('d-none')
 
-        clearCart();
+        clearCart()
     } else {
-        alert('Erro ao finalizar o pedido. Tente novamente.');
+        alert(`Erro: ${result.message}`)
     }
 }
-
 
 function updateCart() {
     const cartItemsContainer = document.getElementById('cart-items');
@@ -100,11 +114,21 @@ function updateCart() {
         itemDiv.innerHTML = `
             <span>${item.name}</span>
             <span>R$ ${item.price.toFixed(2)}</span>
+            <span>Quantidade: <input type="number" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)" /></span>
             <button class="remove-button" onclick="removeFromCart(${index})">❌</button>
         `;
         cartItemsContainer.appendChild(itemDiv);
-        total += item.price;
+        total += item.price * item.quantity;
     });
 
     cartTotalContainer.textContent = `Total: R$ ${total.toFixed(2)}`;
+}
+
+function updateQuantity(index, quantity) {
+    if (quantity <= 0) {
+        alert('Quantidade deve ser maior que zero');
+        return;
+    }
+    cart[index].quantity = quantity;
+    updateCart();
 }

@@ -42,6 +42,7 @@ class ItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido, related_name='itens', on_delete=models.CASCADE)
     nome_produto = models.CharField(max_length=255)
     preco = models.DecimalField(max_digits=10, decimal_places=2)
+    quantidade = models.IntegerField(default=1)
 
     def __str__(self):
         return self.nome_produto
