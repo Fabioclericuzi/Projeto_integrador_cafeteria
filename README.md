@@ -1,4 +1,4 @@
-## Projeto integrador(Cafeteria - Coffeebreack)
+## Projeto integrador(Cafeteria - Coffeebreak)
 
 ### Visão Geral 
 Projeto realizado na linguagem Python que cria um sistema de uma cafeteria online para a realização de cadastros de usuários, contato com a cafeteria e a realização de pedidos online.
