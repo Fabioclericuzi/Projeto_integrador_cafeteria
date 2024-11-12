@@ -12,6 +12,8 @@ simples e eficaz.
 
 2.3 Containers docker: A aplicação está hospedada em containers(o banco e a aplicação) que são executadas através de um arquivo docker-compose.
 
+2.4 Foi criado também um quadro no trello(ferramenta de gerenciamento de projetos) para auxiliar no andamento das tarefas(https://trello.com/b/6k5K7odU/projeto-integrador-cafeteria)
+
 ### 3. Como excutar o projeto
 Para executar o projeto basta acessar a pasta do projeto(coffeebreak) e executar o comando 'docker-compose up --build'. Lembrando que se o projeto for executado no windows, é necessário que o docker desktop esteja rodando.
 
