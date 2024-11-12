@@ -1,6 +1,6 @@
 ## Projeto integrador(Cafeteria - Coffeebreak)
 
-### Visão Geral 
+### 1. Visão Geral 
 Projeto realizado na linguagem Python que cria um sistema de uma cafeteria online para a realização de cadastros de usuários, contato com a cafeteria e a realização de pedidos online.
 Sistema foi criado através da utilização do framework Django que permite a criação de interface gráfica e facilita as configurações necessárias para o deploy da aplicação de maneira
 simples e eficaz. 
